@@ -32,12 +32,12 @@ The integral is implemented in `gatingSolutionMH.m`. `Ca_model.m` and `RK4.m` ar
 
 ## Instructions for running code
 
-The calcium puff model based on integrodifferential equations, described in Hawker et al., (2024), is implemented in Matlab. Each model depends on the functions `gatingSolutionMH.m`, `Ca_model.m` and `RK4.m`. Running the calcium puff model produces 400 `.mat` files containing data on the calcium concentration, buffer concentration and gating variables for each second. The `.mat` files are compiled in the code to produce a single `.mat` file for the entire run time.
+The calcium puff model based on integrodifferential equations, described in Hawker et al., (2024), is implemented in Matlab. Each model depends on the functions `gatingSolutionMH.m`, `Ca_model.m` and `RK4.m`. By changing the `NumTimes` parameter, one can choose how long they want their calcium puff trace to be. Running the calcium puff model produces `NumTimes` .`mat` files containing data on the calcium concentration, buffer concentration and gating variables for each second. The `.mat` files are compiled in the code to produce a single `.mat` file for the entire run time.
 
 ### Parameters
 
-Our model is based on the hybrid stochastic system by Cao et al., (2013). Transition rates for the Markov model are the same as those estimated by Siekmann (2012) and Cao et al., (2013) using single channel stationary data (Wagner and Yule, 2012) and kinetic single channel data (Mak et al., 2007).
+Our model is based on the hybrid stochastic system by Cao et al., (2013). Transition rates for the Markov model are the same as those estimated by Siekmann (2012) and Cao et al., (2013) using single channel stationary data (Wagner and Yule, 2012) and kinetic single channel data (Mak et al., 2007). We choose a ion channel cluster size of 10, this can be changed by altering the `Num_IPR` parameter.
 
-$a_{h42}$ can be considered a tuning parameter within the model and represents the basal concentration of $\lambda_{h42}$. Increasing $a_{h42}$ to 5s increases the frequency of calcium puffs (Cao et al., 2013,2014,2017).
+$a_{h42}$ can be considered a tuning parameter within the model and represents the basal concentration of $\lambda_{h42}$. In our manuscript, we keep $a_{h42}$ constant at 0.5s. However, increasing $a_{h42}$ to 5s increases the frequency of calcium puffs (Cao et al., 2013,2014,2017).
 
 $\tau$ represents how much of past calcium concentrations the ion channel has *knowledge* of. We show in Hawker et al., (2024) that if $\tau$ is set to 0.1s, calcium puffs are not produced. A longer integral length (e.g. 3s) is sufficiently long enough to produce calcium puffs. The reduced 2-state model is used to implement the results presented in the section *The effect of* $\tau$ *on calcium dynamics* in Hawker et al., (2024).
