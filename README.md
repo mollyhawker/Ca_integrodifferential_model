@@ -1,6 +1,6 @@
 # A calcium puff model based on integrodifferential equations (Hawker et al., 2024)
 
-Ca_integrodifferential_model implements three hybrid stochastic systems used to simulate the correct ion channel and calcium signalling dynamics. We ask that reference is made to our manuscript **A calcium puff model based on integrodifferential equations** (<https://doi.org/10.48550/arXiv.2401.17326>) when using this code.
+Ca_integrodifferential_model implements three hybrid stochastic systems used to simulate the correct ion channel and calcium signalling dynamics. We ask that reference be made to our manuscript **A calcium puff model based on integrodifferential equations** (<https://doi.org/10.48550/arXiv.2401.17326>) when using this code. All code is contained within `ca_puff_model.zip`.
 
 ## 6-state model
 
@@ -10,13 +10,13 @@ The 6-state model is simulated in `Hawker_et_al_ca_puff_model_6_state.m`
 
 ## Reduced 6-state model
 
-Our 6-state model is reduced to a 6-state model with one gating variable modeled using the integral terms. This is achieved by using quasi-steady-state approximation and setting three of the gating variables (m24, h24, m42) immediately to their steady state. This is deemed possible as the rate at which the three gating variables reach equilibrium is extremely fast.
+Our 6-state model is reduced to a 6-state model with one gating variable modelled using the integral terms. This is achieved by using quasi-steady-state approximation and setting three of the gating variables (m24, h24, m42) immediately to their steady state. This is possible as the rate at which the three gating variables reach equilibrium is extremely fast.
 
 The reduced 6-state model is simulated in `Hawker_et_al_ca_puff_model_reduced_6_state.m`
 
 ## Reduced 2-state model
 
-We simplify the reduced 6-state model further by using quasi-steady-state approximation and ignoring low dwell times.
+We further simplify the reduced 6-state model by using quasi-steady-state approximation and ignoring low dwell times.
 
 The reduced 2-state model is simulated in `Hawker_et_al_ca_puff_model_2_state.m`
 
