@@ -1,6 +1,6 @@
 # A calcium puff model based on integrodifferential equations (Hawker et al., 2024)
 
-Ca_integrodifferential_model implements three versions of a model for simulating stochastic intracellular calcium release based on hybrid stochastic systems. The model is developed in the manuscript "A calcium puff model based on integrodifferential equations” by Molly Hawker, Pengxing Cao, James Sneyd and Ivo Siekmann” available on arXiv: LINK We ask that reference be made to our manuscript when using this code: Molly Hawker, Pengxing Cao, James Sneyd and Ivo Siekmann (2024). A calcium puff model based on integrodifferential equations, arXiv, arXiv:2401.17326, [https://doi.org/10.48550/arXiv.24](https://doi.org/10.48550/arXiv.2401.17326){.uri}
+Ca_integrodifferential_model implements three versions of a model for simulating stochastic intracellular calcium release based on hybrid stochastic systems. The model is developed in the manuscript "A calcium puff model based on integrodifferential equations” by Molly Hawker, Pengxing Cao, James Sneyd and Ivo Siekmann” available on [arXiv](https://doi.org/10.48550/arXiv.2401.17326). We ask that reference be made to our manuscript when using this code: Molly Hawker, Pengxing Cao, James Sneyd and Ivo Siekmann (2024). A calcium puff model based on integrodifferential equations, arXiv, arXiv:2401.17326, [https://doi.org/10.48550/arXiv.24](https://doi.org/10.48550/arXiv.2401.17326){.uri}
 
 ## 6-state model
 
