@@ -55,7 +55,7 @@ time_c(end)=[];
 
 g=zeros(Num_IPR,1);
 r1=rand(Num_IPR,1);
-zc=zeros(Num_IPR,1);
+
 %%
 
 IP3=0.1; % muM 
@@ -114,17 +114,17 @@ Kh42=20000;
 
 %%
 m24r=am24*ones(1,nPast);
-m24gInf=c0.^n24./(k24^n24+c0.^n24);
+m24gInf=cm_nPast.^n24./(k24^n24+cm_nPast.^n24);
 alpha_m24=m24r.*m24gInf;
 
 %
 h24r=ah24*ones(1,nPast);
-h24gInf=kn24^nn24./(kn24^nn24+c0.^nn24);
+h24gInf=kn24^nn24./(kn24^nn24+cm_nPast.^nn24);
 alpha_h24=h24r.*h24gInf;
 
 %
 m42r=am42*ones(1,nPast);
-m42gInf=c0.^n42./(k42.^n42+c0.^n42);
+m42gInf=cm_nPast.^n42./(k42.^n42+cm_nPast.^n42);
 alpha_m42=m42r.*m42gInf;
 
 %
@@ -134,7 +134,7 @@ alpha_h42=h42r.*h42gInf;
 
 %%
 IT=1; % incremental time per iteration (s)
-Numtimes=50; % number of iterations
+Numtimes=400; % number of iterations
 dis=100;
 
 for full=1:Numtimes
@@ -166,6 +166,18 @@ while time(end)<Tmax
 
         dt1=dt*ones(Num_IPR,1);
 
+        m24r(end+1)=0;
+        alpha_m24(:,end+1)=0;
+
+        h24r(end+1)=0;
+        alpha_h24(:,end+1)=0;
+
+        m42r(end+1)=0;
+        alpha_m42(:,end+1)=0;
+
+        h42r(:,end+1)=0;
+        alpha_h42(:,end+1)=0;
+
     for i=1:Num_IPR
 
         cm(i)=c_new+120000*heaviside(state(i,end)-4.5);
@@ -176,22 +188,22 @@ while time(end)<Tmax
 
         h42r(i,end)=ah42+Vh42*(cm(i).^7)./(Kh42^7+cm(i).^7); 
         h42gInf(i)=kn42^nn42./(kn42^nn42 + cm(i).^nn42);
-        alpha_h42(i,end)=h42r(i,end)*h42gInf(i);
+        alpha_h42(i,end)=h42r(i,end).*h42gInf(i);
         h42_new(i)=gatingSolutionMH(h42r(i,end-nPast+1:dis:end),alpha_h42(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),h42_inf);
 
         m42r(end)=am42;
         m42gInf(i)=cm(i).^n42./(k42.^n42+cm(i).^n42);
-        alpha_m42(i,end)=m42r(end)*m42gInf(i); 
+        alpha_m42(i,end)=m42r(end).*m42gInf(i); 
         m42_new(i)=gatingSolutionMH(m42r(end-nPast+1:dis:end),alpha_m42(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),m42_inf);
         
         m24r(end)=am24;
         m24gInf(i)=cm(i).^n24./(k24^n24+cm(i).^n24);
-        alpha_m24(i,end)=m24r(end)*m24gInf(i);
+        alpha_m24(i,end)=m24r(end).*m24gInf(i);
         m24_new(i)=gatingSolutionMH(m24r(end-nPast+1:dis:end),alpha_m24(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),m24_inf);
 
         h24r(end)=ah24;
         h24gInf(i)=kn24^nn24./(kn24^nn24+cm(i).^nn24);
-        alpha_h24(i,end)=h24r(end)*h24gInf(i);
+        alpha_h24(i,end)=h24r(end).*h24gInf(i);
         h24_new(i)=gatingSolutionMH(h24r(end-nPast+1:dis:end),alpha_h24(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),h24_inf);
 
 
@@ -237,24 +249,24 @@ while time(end)<Tmax
         %% Gating variable calculation
 
         % Brady (1972) integrodifferential equation
-         h42r(i,end)=ah42+Vh42*(cm(i).^7)./(Kh42^7+cm(i).^7); 
+        h42r(i,end)=ah42+Vh42*(cm(i).^7)./(Kh42^7+cm(i).^7); 
         h42gInf(i)=kn42^nn42./(kn42^nn42 + cm(i).^nn42);
-        alpha_h42(i,end)=h42r(i,end)*h42gInf(i);
+        alpha_h42(i,end)=h42r(i,end).*h42gInf(i);
         h42_new(i)=gatingSolutionMH(h42r(i,end-nPast+1:dis:end),alpha_h42(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),h42_inf);
 
         m42r(end)=am42;
         m42gInf(i)=cm(i).^n42./(k42.^n42+cm(i).^n42);
-        alpha_m42(i,end)=m42r(end)*m42gInf(i); 
+        alpha_m42(i,end)=m42r(end).*m42gInf(i); 
         m42_new(i)=gatingSolutionMH(m42r(end-nPast+1:dis:end),alpha_m42(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),m42_inf);
         
         m24r(end)=am24;
         m24gInf(i)=cm(i).^n24./(k24^n24+cm(i).^n24);
-        alpha_m24(i,end)=m24r(end)*m24gInf(i);
+        alpha_m24(i,end)=m24r(end).*m24gInf(i);
         m24_new(i)=gatingSolutionMH(m24r(end-nPast+1:dis:end),alpha_m24(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),m24_inf);
 
         h24r(end)=ah24;
         h24gInf(i)=kn24^nn24./(kn24^nn24+cm(i).^nn24);
-        alpha_h24(i,end)=h24r(end)*h24gInf(i);
+        alpha_h24(i,end)=h24r(end).*h24gInf(i);
         h24_new(i)=gatingSolutionMH(h24r(end-nPast+1:dis:end),alpha_h24(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),h24_inf);
 
         %% calculating q24 and q42 rates
@@ -320,7 +332,7 @@ while time(end)<Tmax
 
 end
 % 
-% toc
+toc
 
 save(['puff_10IPRs_IP3_01uM_6s_',num2str(full)])
 
@@ -349,7 +361,6 @@ alpha_h42=alpha_h42(:,end-nPast+1:end);
 time_c=time_c(end-nPast+1:end);
 end
 
-
 %%
 totaltime=[];
 Ca=[];
@@ -358,7 +369,6 @@ m42_total=[];
 h24_total=[];
 m24_total=[];
 state_total=[];
-cm_total=[];
 fluo=[];
 
 for ldf=1:Numtimes
@@ -367,7 +377,6 @@ load(['puff_10IPRs_IP3_01uM_6s_',num2str(ldf)])
 
 totaltime=[totaltime,time];
 Ca=[Ca,c];
-
 h42_total=[h42_total,h42_track];
 m42_total=[m42_total,m42_track];
 h24_total=[h24_total,h24_track];

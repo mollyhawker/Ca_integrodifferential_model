@@ -55,7 +55,7 @@ time_c(end)=[];
 
 g=zeros(Num_IPR,1);
 r1=rand(Num_IPR,1);
-zc=zeros(Num_IPR,1);
+
 %%
 
 IP3=0.1; % muM 
@@ -113,12 +113,12 @@ Vh42=100;
 Kh42=20000;
 
 %%
-h42r=ah42+Vh42*(cm_nPast.^7)./(Km42^7+cm_nPast.^7);
+h42r=ah42+Vh42*(cm_nPast.^7)./(Kh42^7+cm_nPast.^7);
 h42gInf=kn42^nn42./(kn42^nn42 + c0.^nn42);
 alpha_h42=h42r.*h42gInf;
 %%
 IT=1; % incremental time per iteration (s)
-Numtimes=10; % number of iterations
+Numtimes=400; % number of iterations
 dis=100;
 
 
@@ -151,6 +151,9 @@ while time(end)<Tmax
 
         dt1=dt*ones(Num_IPR,1);
 
+        h42r(:,end+1)=0;
+        alpha_h42(:,end+1)=0;
+
     for i=1:Num_IPR
 
         cm(i)=c_new+120000*heaviside(state(i,end)-4.5);
@@ -170,7 +173,7 @@ while time(end)<Tmax
         % Brady (1972) integrodifferential equation
         h42r(i,end)=ah42+Vh42*(cm(i).^7)./(Kh42^7+cm(i).^7); 
         h42gInf(i)=kn42^nn42./(kn42^nn42 + cm(i).^nn42);
-        alpha_h42(i,end)=h42r(i,end)*h42gInf(i);
+        alpha_h42(i,end)=h42r(i,end).*h42gInf(i);
         h42_new(i)=gatingSolutionMH(h42r(i,end-nPast+1:dis:end),alpha_h42(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),h42_inf);
 
         %% calculating q24 and q42 rates
@@ -227,7 +230,7 @@ while time(end)<Tmax
         % Brady (1972) integrodifferential equation
         h42r(i,end)=ah42+Vh42*(cm(i).^7)./(Kh42^7+cm(i).^7); 
         h42gInf(i)=kn42^nn42./(kn42^nn42 + cm(i).^nn42);
-        alpha_h42(i,end)=h42r(i,end)*h42gInf(i);
+        alpha_h42(i,end)=h42r(i,end).*h42gInf(i);
         h42_new(i)=gatingSolutionMH(h42r(i,end-nPast+1:dis:end),alpha_h42(i,end-nPast+1:dis:end),diff(time_c(end-nPast+1:dis:end)),h42_inf);
 
         %% calculating q24 and q42 rates

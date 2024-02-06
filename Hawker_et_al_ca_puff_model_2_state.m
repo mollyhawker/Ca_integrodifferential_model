@@ -105,7 +105,7 @@ ah42=0.5;
 Vh42=100;
 Kh42=20000;
 
-%% Brady elay
+%% Brady delay
 h42r=ah42+Vh42*(cm_nPast.^7)./(Kh42^7+cm_nPast.^7);
 h42gInf=kn42^nn42./(kn42^nn42 + c0.^nn42);
 alpha_h42=h42r.*h42gInf;
@@ -144,6 +144,7 @@ while time(end)<Tmax
         B_new=Y_new(2);
 
         dt1=dt*ones(Num_IPR,1);
+        
         h42r(:,end+1)=0;
         alpha_h42(:,end+1)=0;
 
